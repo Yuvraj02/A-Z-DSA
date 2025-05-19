@@ -28,3 +28,34 @@ Constraints:
 
 1 <= s.length <= 2 * 105
 s consists only of printable ASCII characters.
+
+
+Solution====================
+
+class Solution {
+public:
+
+    bool check(string &s, long long int &i ,long long int &j){
+
+        //We will reach here only in one case, when we have succefully evaluated each character
+        if(i>j) return true;
+    
+        //These loops check if the character is in correct range
+        while(i<j && !((tolower(s[i])>='a' && tolower(s[i]) <= 'z') || (s[i] >= '0' && s[i] <='9'))) i++;
+        while(i<j && !((tolower(s[j])>='a' && tolower(s[j]) <= 'z') || (s[j] >= '0' && s[j] <='9'))) j--;
+    
+        //If characters match then move forward
+        if(tolower(s[i]) == tolower(s[j])) {
+            i++;j--;
+           
+            return check(s,i,j);
+        }
+        return false;
+    }
+
+    bool isPalindrome(string s) {
+        long long int i = 0, j = s.size()-1;
+        if(j==0) return true;
+        return check(s,i,j);
+    }
+};
